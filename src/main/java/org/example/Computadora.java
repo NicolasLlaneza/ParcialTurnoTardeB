@@ -1,4 +1,5 @@
-package org.example;import java.util.Arrays;
+package org.example;
+import java.util.ArrayList;
 
 public class Computadora {
     // Atributos privados
@@ -8,8 +9,7 @@ public class Computadora {
     private double precioTotal;
     private double porcentajeAumento;
     private double montoFinal;
-    private String[][] componentes;
-
+    private ArrayList<String[]> componentes = new ArrayList<>();
     // Constructor vacío
     public Computadora() {}
 
@@ -32,25 +32,22 @@ public class Computadora {
     public double getMontoFinal() { return montoFinal; }
     public void setMontoFinal(double montoFinal) { this.montoFinal = montoFinal; }
 
-    public String[][] getComponentes() { return componentes; }
-    public void setComponentes(int cantidad) { this.componentes = new String[cantidad][4]; }
+    public ArrayList<String[]> getComponentes() { return componentes; }
+    public void setComponentes(int cantidad) { this.componentes = new ArrayList<>(); }
 
-    // Método para agregar un componente al array
+
     public boolean agregarComponente(String codigo, String[][] componentesDisponibles) {
         for (String[] componente : componentes) {
-            if (componente != null && componente[0].equals(codigo)) {
+            if (componente[0].equals(codigo)) {
                 System.out.println("El componente ya fue agregado anteriormente.");
                 return false;
             }
         }
         for (String[] disponible : componentesDisponibles) {
             if (disponible[0].equals(codigo)) {
-                for (int i = 0; i < componentes.length; i++) {
-                    if (componentes[i] == null) {
-                        componentes[i] = disponible.clone();
-                        return true;
-                    }
-                }
+                componentes.add(disponible.clone());
+                precioTotal += Double.parseDouble(disponible[2]); // Actualiza el precio total
+                return true;
             }
         }
         System.out.println("El código ingresado es incorrecto.");
